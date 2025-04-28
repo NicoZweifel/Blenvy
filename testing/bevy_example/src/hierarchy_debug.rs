@@ -119,7 +119,7 @@ pub fn draw_hierarchy_debug(
 
         //
     }
-    let display = display.single();
+    let display = display.single().unwrap();
     *writer.text(display, 0) = hierarchy_display.join("\n");
 }
 
@@ -162,7 +162,7 @@ fn __check_for_gltf_extras(
             );
             gltf_extra_infos_lines.push(formatted_extras);
         }
-        let display = display.single();
+        let display = display.single().unwrap();
         *writer.text(display, 0) = gltf_extra_infos_lines.join("\n");
     }
 }
@@ -182,7 +182,7 @@ fn __check_for_component(
         println!("yoho component");
     }
 
-    let display = display.single();
+    let display = display.single().unwrap();
     *writer.text(display, 0) = info_lines.join("\n");
 }
 
