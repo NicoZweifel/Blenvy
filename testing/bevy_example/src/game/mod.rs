@@ -53,7 +53,7 @@ fn validate_export(
         if name.to_string() == *"Blueprint4_nested" && blueprint_info.name == *"Blueprint4_nested" {
             if let Ok(cur_children) = children.get(entity) {
                 for child in cur_children.iter() {
-                    if let Ok((_, child_name, child_blueprint_info)) = blueprints.get(*child) {
+                    if let Ok((_, child_name, child_blueprint_info)) = blueprints.get(child) {
                         if child_name.to_string() == *"Blueprint3"
                             && child_blueprint_info.name == *"Blueprint3"
                         {

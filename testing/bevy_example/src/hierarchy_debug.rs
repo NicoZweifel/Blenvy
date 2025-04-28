@@ -113,7 +113,7 @@ pub fn draw_hierarchy_debug(
         // let mut children = all_children.get(root_entity);
         /*for child in children.iter() {
             // hierarchy_display
-            let name = all_names.get(*child); //.unwrap_or(&Name::new("no name"));
+            let name = all_names.get(child); //.unwrap_or(&Name::new("no name"));
             hierarchy_display.push(format!("  {:?}", name))
         }*/
 

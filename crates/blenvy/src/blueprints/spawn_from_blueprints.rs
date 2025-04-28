@@ -493,7 +493,7 @@ pub(crate) fn blueprints_assets_loaded(
         let mut original_children: Vec<Entity> = vec![];
         if let Ok(c) = all_children.get(entity) {
             for child in c.iter() {
-                original_children.push(*child);
+                original_children.push(child);
             }
         }
 
@@ -694,7 +694,7 @@ pub(crate) fn blueprints_cleanup_spawned_scene(
                                                              // we find the first child that was not in the entity before (aka added during the scene spawning)
         for child in children.iter() {
             if !original_children.0.contains(child) {
-                blueprint_root_entity = *child;
+                blueprint_root_entity = child;
                 break;
             }
         }
@@ -716,8 +716,8 @@ pub(crate) fn blueprints_cleanup_spawned_scene(
         // we move all of children of the blueprint instance one level to the original entity to avoid having an additional, useless nesting level
         if let Ok(root_entity_children) = all_children.get(blueprint_root_entity) {
             for child in root_entity_children.iter() {
-                // info!("copying child {:?} upward from {:?} to {:?}", names.get(*child), blueprint_root_entity, original);
-                commands.entity(original).add_child(*child);
+                // info!("copying child {:?} upward from {:?} to {:?}", names.get(child), blueprint_root_entity, original);
+                commands.entity(original).add_child(child);
             }
         }
 
