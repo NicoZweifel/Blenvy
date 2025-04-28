@@ -1,6 +1,6 @@
 use std::path::Path;
 
-use bevy::{gltf::Gltf, prelude::*, scene::SceneInstance, platform::collections::HashMap};
+use bevy::{gltf::Gltf, platform::collections::HashMap, prelude::*, scene::SceneInstance};
 use tracing::{debug, info, warn};
 
 use crate::{

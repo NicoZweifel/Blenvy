@@ -1,6 +1,11 @@
 use bevy::{
     ecs::{
-        entity::Entity, hierarchy::ChildOf, name::Name, query::{Added, Without}, reflect::{AppTypeRegistry, ReflectComponent}, world::World
+        entity::Entity,
+        hierarchy::ChildOf,
+        name::Name,
+        query::{Added, Without},
+        reflect::{AppTypeRegistry, ReflectComponent},
+        world::World,
     },
     gltf::{GltfExtras, GltfMaterialExtras, GltfMeshExtras, GltfSceneExtras},
     platform::collections::HashMap,

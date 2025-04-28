@@ -1,6 +1,6 @@
+use bevy::platform::collections::HashMap;
 use bevy::reflect::serde::ReflectDeserializer;
 use bevy::reflect::{PartialReflect, TypeRegistration, TypeRegistry};
-use bevy::platform::collections::HashMap;
 use ron::Value;
 use serde::de::DeserializeSeed;
 use tracing::{debug, warn};

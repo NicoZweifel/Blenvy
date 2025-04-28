@@ -4,8 +4,8 @@ use bevy::{
     reflect::{TypeInfo, TypeRegistration, VariantInfo},
 };
 use serde_json::{json, Map, Value};
-use tracing::info;
 use std::{fs::File, path::Path};
+use tracing::info;
 
 pub fn export_types(world: &mut World) {
     let config = world

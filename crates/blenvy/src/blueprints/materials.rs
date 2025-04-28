@@ -96,7 +96,9 @@ pub(crate) fn inject_materials(
                             material_info.path.clone()
                         );
 
-                        commands.entity(child).insert(MeshMaterial3d(material.clone()));
+                        commands
+                            .entity(child)
+                            .insert(MeshMaterial3d(material.clone()));
                     }
                 }
             }
