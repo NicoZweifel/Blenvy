@@ -797,7 +797,7 @@ pub(crate) fn blueprints_cleanup_spawned_scene(
             .remove::<BlueprintChildrenReady>() // we are done with this step, we can remove the `BlueprintChildrenReady` tag component
             .insert(BlueprintReadyForPostProcess); // Tag the entity so any systems dealing with post processing can know it is now their "turn"
 
-        commands.entity(blueprint_root_entity).despawn_recursive(); // Remove the root entity that comes from the spawned-in scene
+        commands.entity(blueprint_root_entity).despawn(); // Remove the root entity that comes from the spawned-in scene
     }
 }
 

@@ -90,7 +90,7 @@ pub(crate) fn react_to_asset_changes(
             // TODO: only remove those that are "in blueprint"
             if children.is_some() {
                 for child in children.unwrap().iter() {
-                    commands.entity(*child).despawn_recursive();
+                    commands.entity(child).despawn();
                 }
             }
             commands

@@ -55,7 +55,7 @@ pub(crate) fn prepare_loading(
 ) {
     for e in gameworlds.iter() {
         info!("--loading: despawn old world/level");
-        commands.entity(e).despawn_recursive();
+        commands.entity(e).despawn();
     }
 }
 
