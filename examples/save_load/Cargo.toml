@@ -15,7 +15,6 @@ blenvy.workspace = true
 serde_json.workspace = true
 serde.workspace = true
 rand.workspace = true
-hashbrown.workspace = true
 
 bevy-inspector-egui = { workspace = true, optional = true}
 

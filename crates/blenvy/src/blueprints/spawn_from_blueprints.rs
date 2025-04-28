@@ -1,7 +1,6 @@
 use std::path::Path;
 
-use bevy::{gltf::Gltf, prelude::*, scene::SceneInstance};
-use hashbrown::HashMap;
+use bevy::{gltf::Gltf, prelude::*, scene::SceneInstance, utils::hashbrown::HashMap};
 
 use crate::{
     AnimationInfos, AssetLoadTracker, AssetToBlueprintInstancesMapper, BlueprintAnimationInfosLink,

@@ -20,8 +20,7 @@ pub use copy_components::*;
 pub(crate) mod hot_reload;
 pub(crate) use hot_reload::*;
 
-use bevy::prelude::*;
-use hashbrown::HashMap;
+use bevy::{prelude::*, utils::hashbrown::HashMap};
 
 use crate::GltfComponentsSet;
 
