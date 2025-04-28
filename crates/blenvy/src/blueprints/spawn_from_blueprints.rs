@@ -118,7 +118,7 @@ pub(super) fn blueprints_prepare_metadata_file_for_spawn(
             Entity,
             &BlueprintInfo,
             Option<&Name>,
-            Option<&Parent>,
+            Option<&ChildOf>,
             Option<&HideUntilReady>,
             Option<&Visibility>,
             Option<&AddToGameWorld>,
@@ -199,7 +199,7 @@ pub(super) fn blueprints_prepare_metadata_file_for_spawn(
             // only allow automatically adding a newly spawned blueprint instance to the "world", if the entity does not have a parent
             if add_to_world.is_some() {
                 let world = game_world
-                    .get_single_mut()
+                    .single_mut()
                     .expect("there should be a game world present");
                 commands.entity(world).add_child(entity);
             }
@@ -424,7 +424,7 @@ pub(crate) fn blueprints_check_assets_loading(
         if all_loaded {
             assets_to_load.all_loaded = true;
             // println!("LOADING: DONE for ALL assets of {:?} (instance of {}), preparing for spawn", entity_name, blueprint_info.path);
-            blueprint_events.send(BlueprintEvent::AssetsLoaded {
+            blueprint_events.write(BlueprintEvent::AssetsLoaded {
                 entity,
                 blueprint_name: blueprint_info.name.clone(),
                 blueprint_path: blueprint_info.path.clone(),
@@ -559,7 +559,7 @@ pub(crate) fn blueprints_scenes_spawned(
     with_blueprint_infos: Query<(Entity, Option<&Name>), With<BlueprintInfo>>,
 
     all_children: Query<&Children>,
-    all_parents: Query<&Parent>,
+    all_parents: Query<&ChildOf>,
 
     // mut sub_blueprint_trackers: Query<(Entity, &mut SubBlueprintsSpawnTracker, &BlueprintInfo)>,
     mut commands: Commands,
@@ -669,9 +669,9 @@ pub(crate) fn blueprints_cleanup_spawned_scene(
         ),
         Added<BlueprintChildrenReady>,
     >,
-    animation_players: Query<(Entity, &Parent), With<AnimationPlayer>>,
+    animation_players: Query<(Entity, &ChildOf), With<AnimationPlayer>>,
     all_children: Query<&Children>,
-    all_parents: Query<&Parent>,
+    all_parents: Query<&ChildOf>,
     with_animation_infos: Query<&AnimationInfos>,
     // FIXME: meh
     anims: Query<&BlueprintAnimations>,
@@ -693,7 +693,7 @@ pub(crate) fn blueprints_cleanup_spawned_scene(
                                                              // let diff = HashSet::from_iter(original_children.0).difference(HashSet::from_iter(children));
                                                              // we find the first child that was not in the entity before (aka added during the scene spawning)
         for child in children.iter() {
-            if !original_children.0.contains(child) {
+            if !original_children.0.contains(&child) {
                 blueprint_root_entity = child;
                 break;
             }
@@ -709,7 +709,7 @@ pub(crate) fn blueprints_cleanup_spawned_scene(
         commands.queue(CopyComponents {
             source: blueprint_root_entity,
             destination: original,
-            exclude: vec![TypeId::of::<Parent>(), TypeId::of::<Children>()],
+            exclude: vec![TypeId::of::<ChildOf>(), TypeId::of::<Children>()],
             stringent: false,
         });
 
@@ -723,7 +723,7 @@ pub(crate) fn blueprints_cleanup_spawned_scene(
 
         if animations.named_animations.keys().len() > 0 {
             for (entity_with_player, parent) in animation_players.iter() {
-                if parent.get() == blueprint_root_entity {
+                if parent.parent() == blueprint_root_entity {
                     println!(
                         "FOUND ANIMATION PLAYER FOR {:?} {:?} ",
                         all_names.get(original),
@@ -892,7 +892,7 @@ pub(crate) fn blueprints_finalize_instances(
             }
         }
 
-        blueprint_events.send(BlueprintEvent::InstanceReady {
+        blueprint_events.write(BlueprintEvent::InstanceReady {
             entity,
             blueprint_name: blueprint_info.name.clone(),
             blueprint_path: blueprint_info.path.clone(),

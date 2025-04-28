@@ -21,7 +21,7 @@ pub(crate) fn react_to_asset_changes(
     blueprint_assets: Query<(Entity, Option<&Name>, &BlueprintInfo, Option<&Children>)>,
     _blueprint_children_entities: Query<&FromBlueprint>, //=> can only be used if the entites are tagged
     assets_to_blueprint_instances: Res<AssetToBlueprintInstancesMapper>,
-    all_parents: Query<&Parent>,
+    all_parents: Query<&ChildOf>,
     spawning_blueprints: Query<&BlueprintSpawning>,
 
     asset_server: Res<AssetServer>,

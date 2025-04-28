@@ -31,7 +31,7 @@ pub(crate) fn inject_materials(
     with_materials_and_meshes: Query<
         (),
         (
-            With<Parent>,
+            With<ChildOf>,
             With<MeshMaterial3d<StandardMaterial>>,
             With<Mesh3d>,
         ),
