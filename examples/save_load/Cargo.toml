@@ -9,7 +9,7 @@ default = []
 bevy-inspector = ["bevy-inspector-egui"]
 
 [dependencies]
-bevy = { workspace = true, features = ["dynamic_linking"] }
+bevy = { workspace = true,default-features = true, features = ["dynamic_linking"] }
 blenvy.workspace = true
 
 serde_json.workspace = true
