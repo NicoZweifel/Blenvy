@@ -10,7 +10,7 @@ use bevy::{
     hierarchy::Parent,
     log::{debug, warn},
     reflect::{PartialReflect, TypeRegistration},
-    utils::HashMap,
+    platform::collections::HashMap,
 };
 
 use crate::{ronstring_to_reflect_component, GltfProcessed};

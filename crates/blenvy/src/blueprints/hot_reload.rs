@@ -5,7 +5,7 @@ use crate::{
 use bevy::asset::AssetEvent;
 use bevy::prelude::*;
 use bevy::scene::SceneInstance;
-use bevy::utils::hashbrown::HashMap;
+use bevy::platform::collections::HashMap;
 
 /// Resource mapping asset paths (ideally untyped ids, but more complex) to a list of blueprint instance entity ids
 #[derive(Debug, Clone, Resource, Default)]

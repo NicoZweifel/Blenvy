@@ -1,6 +1,6 @@
 use std::any::TypeId;
 
-use bevy::{prelude::*, utils::hashbrown::HashSet};
+use bevy::{prelude::*, platform::collections::HashMap};
 use blenvy::{
     AddToGameWorld, BlenvyPlugin, BlueprintInfo, BlueprintWorld, Dynamic, HideUntilReady,
     LoadingRequest, SavingRequest, SpawnBlueprint,
