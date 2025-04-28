@@ -1,9 +1,9 @@
-use bevy::log::{debug, warn};
 use bevy::reflect::serde::ReflectDeserializer;
 use bevy::reflect::{PartialReflect, TypeRegistration, TypeRegistry};
 use bevy::platform::collections::HashMap;
 use ron::Value;
 use serde::de::DeserializeSeed;
+use tracing::{debug, warn};
 
 use super::capitalize_first_letter;
 
