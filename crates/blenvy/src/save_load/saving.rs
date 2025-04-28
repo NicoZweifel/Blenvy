@@ -208,7 +208,7 @@ pub(crate) fn cleanup_save(
         commands.entity(original_parent.0).add_child(entity);
     }
     // commands.remove_resource::<StaticEntitiesStorage>();
-    saving_finished.send(SaveFinished);
+    saving_finished.write(SaveFinished);
 
     commands.remove_resource::<SavingRequested>();
 }
