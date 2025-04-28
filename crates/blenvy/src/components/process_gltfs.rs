@@ -1,17 +1,12 @@
 use bevy::{
-    core::Name,
     ecs::{
-        entity::Entity,
-        hierarchy::ChildOf,
-        query::{Added, Without},
-        reflect::{AppTypeRegistry, ReflectComponent},
-        world::World,
+        entity::Entity, hierarchy::ChildOf, name::Name, query::{Added, Without}, reflect::{AppTypeRegistry, ReflectComponent}, world::World
     },
     gltf::{GltfExtras, GltfMaterialExtras, GltfMeshExtras, GltfSceneExtras},
-    log::{debug, warn},
     platform::collections::HashMap,
     reflect::{PartialReflect, TypeRegistration},
 };
+use tracing::{debug, warn};
 
 use crate::{ronstring_to_reflect_component, GltfProcessed};
 
@@ -31,7 +26,7 @@ fn find_entity_components(
         if let Some(name) = name {
             if name.as_str().contains("components") || name.as_str().ends_with("_pa") {
                 debug!("adding components to parent");
-                target_entity = parent.expect("the target entity had a parent ").get();
+                target_entity = parent.expect("the target entity had a parent ").parent();
             }
         }
     }

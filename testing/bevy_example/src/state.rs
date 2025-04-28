@@ -52,6 +52,7 @@ pub struct InGameLoading;
 pub struct StatePlugin;
 impl Plugin for StatePlugin {
     fn build(&self, app: &mut App) {
+        app.init
         app.init_state::<AppState>().init_state::<GameState>();
     }
 }
