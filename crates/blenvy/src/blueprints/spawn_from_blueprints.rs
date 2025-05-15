@@ -520,7 +520,7 @@ pub(crate) fn blueprints_assets_loaded(
 
         commands.entity(entity).insert((
             SceneRoot(scene.clone()),
-            transforms,
+            transform,
             global_transform,
             OriginalChildren(original_children),
             BlueprintAnimations {
