@@ -90,7 +90,7 @@ impl CopyComponents {
             let source = component
                 .reflect(world.get_entity(self.source).unwrap())
                 .unwrap()
-                .clone_value();
+                .to_dynamic();
 
             let mut destination = world
                 .get_entity_mut(self.destination)
