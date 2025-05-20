@@ -1,8 +1,7 @@
-use avian3d::prelude::*;
 use bevy::prelude::*;
 use blenvy::{
-    AddToGameWorld, BlenvyPlugin, BluePrintBundle, BlueprintInfo, Dynamic, GameWorldTag,
-    HideUntilReady, SpawnBlueprint,
+    AddToGameWorld, BlenvyPlugin, BlueprintInfo, Dynamic, GameWorldTag, HideUntilReady,
+    SpawnBlueprint,
 };
 
 mod game;
@@ -40,31 +39,29 @@ fn setup_game(mut commands: Commands) {
 // you can also spawn blueprint instances at runtime
 pub fn spawn_blueprint_instance(keycode: Res<ButtonInput<KeyCode>>, mut commands: Commands) {
     if keycode.just_pressed(KeyCode::KeyS) {
-        let mut rng = rand::thread_rng();
+        let mut rng = rand::rng();
         let range = 5.5;
-        let x: f32 = rng.gen_range(-range..range);
-        let y: f32 = rng.gen_range(-range..range);
+        let x: f32 = rng.random_range(-range..range);
+        let y: f32 = rng.random_range(-range..range);
 
-        let mut rng = rand::thread_rng();
+        let mut rng = rand::rng();
         let range = 0.8;
-        let vel_x: f32 = rng.gen_range(-range..range);
-        let vel_y: f32 = rng.gen_range(2.0..2.5);
-        let vel_z: f32 = rng.gen_range(-range..range);
+        let vel_x: f32 = rng.random_range(-range..range);
+        let vel_y: f32 = rng.random_range(2.0..2.5);
+        let vel_z: f32 = rng.random_range(-range..range);
 
-        let name_index: u64 = rng.gen();
+        let name_index: u64 = rng.random();
 
         let __new_entity = commands
             .spawn((
-                BluePrintBundle {
-                    blueprint: BlueprintInfo::from_path("blueprints/Health_Pickup.glb"),
-                    ..Default::default()
-                },
+                BlueprintInfo::from_path("blueprints/Health_Pickup.glb"),
+                SpawnBlueprint,
                 Dynamic,
                 bevy::prelude::Name::from(format!("test{}", name_index)),
                 HideUntilReady,
                 AddToGameWorld,
                 Transform::from_xyz(x, 2.0, y),
-                LinearVelocity(Vec3::new(vel_x, vel_y, vel_z)),
+                //LinearVelocity(Vec3::new(vel_x, vel_y, vel_z)),
             ))
             .id();
         //         commands.entity(world).add_child(new_entity);

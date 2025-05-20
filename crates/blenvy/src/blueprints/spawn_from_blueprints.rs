@@ -724,7 +724,7 @@ pub(crate) fn blueprints_cleanup_spawned_scene(
 
         if animations.named_animations.keys().len() > 0 {
             for (entity_with_player, parent) in animation_players.iter() {
-                if parent.get() == blueprint_root_entity {
+                if parent.parent() == blueprint_root_entity {
                     debug!(
                         "FOUND ANIMATION PLAYER FOR {:?} {:?} ",
                         all_names.get(original),

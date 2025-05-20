@@ -1,4 +1,4 @@
-use bevy::ecs::world::Command;
+use bevy::prelude::Command;
 use bevy::prelude::*;
 use std::any::TypeId;
 use tracing::{debug, warn};
@@ -90,8 +90,7 @@ impl CopyComponents {
             let source = component
                 .reflect(world.get_entity(self.source).unwrap())
                 .unwrap()
-                .reflect_clone()
-                .unwrap();
+                .clone_value();
 
             let mut destination = world
                 .get_entity_mut(self.destination)
