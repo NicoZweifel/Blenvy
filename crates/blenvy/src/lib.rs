@@ -1,6 +1,6 @@
 #![doc = include_str!("../../../README.md")]
 
-use bevy::{render::primitives::Aabb, utils::HashMap};
+use bevy::{platform::collections::HashMap, render::primitives::Aabb};
 use std::path::PathBuf;
 
 pub mod components;

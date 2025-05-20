@@ -34,7 +34,7 @@ fn start_game(mut next_app_state: ResMut<NextState<AppState>>) {
 #[allow(clippy::too_many_arguments)]
 #[allow(clippy::type_complexity)]
 fn validate_export(
-    parents: Query<&Parent>,
+    parents: Query<&ChildOf>,
     children: Query<&Children>,
     names: Query<&Name>,
     blueprints: Query<(Entity, &Name, &BlueprintInfo)>,
@@ -43,7 +43,7 @@ fn validate_export(
     empties_candidates: Query<(Entity, &Name, &GlobalTransform)>,
 
     assets_list: Query<(Entity, &BlueprintAssets)>,
-    root: Query<(Entity, &Name, &Children), (Without<Parent>, With<Children>)>,
+    root: Query<(Entity, &Name, &Children), (Without<ChildOf>, With<Children>)>,
 ) {
     let animations_found =
         !animation_player_links.is_empty() && scene_animations.into_iter().len() == 4;
@@ -53,7 +53,7 @@ fn validate_export(
         if name.to_string() == *"Blueprint4_nested" && blueprint_info.name == *"Blueprint4_nested" {
             if let Ok(cur_children) = children.get(entity) {
                 for child in cur_children.iter() {
-                    if let Ok((_, child_name, child_blueprint_info)) = blueprints.get(*child) {
+                    if let Ok((_, child_name, child_blueprint_info)) = blueprints.get(child) {
                         if child_name.to_string() == *"Blueprint3"
                             && child_blueprint_info.name == *"Blueprint3"
                         {
@@ -86,17 +86,17 @@ fn validate_export(
 
     // generate parent/child "tree"
     if !root.is_empty() {
-        let root = root.single();
+        let root = root.single().unwrap();
         let mut tree: HashMap<String, Vec<String>> = HashMap::new();
 
         for child in children.iter_descendants(root.0) {
             let child_name: String = names
                 .get(child)
                 .map_or(String::from("no_name"), |e| e.to_string()); //|e| e.to_string(), || "no_name".to_string());
-                                                                     //debug!("  child {}", child_name);
+                                                                     //println!("  child {}", child_name);
             let parent = parents.get(child).unwrap();
             let parent_name: String = names
-                .get(parent.get())
+                .get(parent.parent())
                 .map_or(String::from("no_name"), |e| e.to_string()); //|e| e.to_string(), || "no_name".to_string());
             tree.entry(parent_name)
                 .or_default()
@@ -117,12 +117,10 @@ fn validate_export(
     .expect("Unable to write file");
 }
 
-fn generate_screenshot(
-    mut commands: Commands,
-) {
+fn generate_screenshot(mut commands: Commands) {
     commands
-      .spawn(Screenshot::primary_window())
-      .observe(save_to_disk("screenshot.png"));
+        .spawn(Screenshot::primary_window())
+        .observe(save_to_disk("screenshot.png"));
 }
 
 fn exit_game(mut app_exit_events: ResMut<Events<bevy::app::AppExit>>) {

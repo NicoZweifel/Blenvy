@@ -38,14 +38,14 @@ pub fn setup_hierarchy_debug(mut commands: Commands) {
 pub fn get_descendants(
     all_children: &Query<&Children>,
     all_names: &Query<&Name>,
-    root: &Entity,
+    root: Entity,
     __all_transforms: &Query<&Transform>,
     __all_global_transforms: &Query<&GlobalTransform>,
     nesting: usize,
     to_check: &Query<&EnumTest>, //&Query<(&BlueprintInstanceReady, &BlueprintAssets)>,
 ) -> String {
     let mut hierarchy_display: Vec<String> = vec![];
-    let root_name = all_names.get(*root);
+    let root_name = all_names.get(root);
     let name;
     if let Ok(root_name) = root_name {
         name = root_name.to_string();
@@ -54,9 +54,9 @@ pub fn get_descendants(
     }
 
     let mut component_display: String = "".into();
-    let __components_to_check = to_check.get(*root);
+    let __components_to_check = to_check.get(root);
 
-    if let Ok(compo) = to_check.get(*root) {
+    if let Ok(compo) = to_check.get(root) {
         component_display = format!("{:?}", compo);
     }
 
@@ -68,7 +68,7 @@ pub fn get_descendants(
                           //all_global_transforms.get(*root)
     )); //  ({:?}) // ({:?}) ({:?})
 
-    if let Ok(children) = all_children.get(*root) {
+    if let Ok(children) = all_children.get(root) {
         for child in children.iter() {
             let child_descendants_display = get_descendants(
                 all_children,
@@ -86,7 +86,7 @@ pub fn get_descendants(
 }
 
 pub fn draw_hierarchy_debug(
-    root: Query<Entity, Without<Parent>>,
+    root: Query<Entity, Without<ChildOf>>,
     all_children: Query<&Children>,
     all_names: Query<&Name>,
     all_transforms: Query<&Transform>,
@@ -104,7 +104,7 @@ pub fn draw_hierarchy_debug(
         hierarchy_display.push(get_descendants(
             &all_children,
             &all_names,
-            &root_entity,
+            root_entity,
             &all_transforms,
             &all_global_transforms,
             0,
@@ -113,13 +113,13 @@ pub fn draw_hierarchy_debug(
         // let mut children = all_children.get(root_entity);
         /*for child in children.iter() {
             // hierarchy_display
-            let name = all_names.get(*child); //.unwrap_or(&Name::new("no name"));
+            let name = all_names.get(child); //.unwrap_or(&Name::new("no name"));
             hierarchy_display.push(format!("  {:?}", name))
         }*/
 
         //
     }
-    let display = display.single();
+    let display = display.single().unwrap();
     *writer.text(display, 0) = hierarchy_display.join("\n");
 }
 
@@ -162,7 +162,7 @@ fn __check_for_gltf_extras(
             );
             gltf_extra_infos_lines.push(formatted_extras);
         }
-        let display = display.single();
+        let display = display.single().unwrap();
         *writer.text(display, 0) = gltf_extra_infos_lines.join("\n");
     }
 }
@@ -179,10 +179,10 @@ fn __check_for_component(
             enum_complex, name
         );
         info_lines.push(data);
-        debug!("yoho component");
+        println!("yoho component");
     }
 
-    let display = display.single();
+    let display = display.single().unwrap();
     *writer.text(display, 0) = info_lines.join("\n");
 }
 

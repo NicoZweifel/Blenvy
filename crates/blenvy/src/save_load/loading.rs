@@ -1,4 +1,5 @@
 use bevy::prelude::*;
+use tracing::info;
 
 use crate::{BlueprintInfo, DynamicEntitiesRoot, GameWorldTag, HideUntilReady, SpawnBlueprint};
 
@@ -55,7 +56,7 @@ pub(crate) fn prepare_loading(
 ) {
     for e in gameworlds.iter() {
         info!("--loading: despawn old world/level");
-        commands.entity(e).despawn_recursive();
+        commands.entity(e).despawn();
     }
 }
 

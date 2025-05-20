@@ -1,6 +1,6 @@
 use std::any::TypeId;
 
-use bevy::{prelude::*, utils::hashbrown::HashSet};
+use bevy::{prelude::*, platform::collections::HashSet};
 use blenvy::{
     AddToGameWorld, BlenvyPlugin, BlueprintInfo, BlueprintWorld, Dynamic, HideUntilReady,
     LoadingRequest, SavingRequest, SpawnBlueprint,
@@ -79,7 +79,7 @@ fn spawn_blueprint_instance(keycode: Res<ButtonInput<KeyCode>>, mut commands: Co
             bevy::prelude::Name::from(format!("test{}", name_index)),
             HideUntilReady,
             AddToGameWorld,
-            TransformBundle::from_transform(Transform::from_xyz(x, 2.0, y)),
+            Transform::from_xyz(x, 2.0, y),
         ));
     }
 }
@@ -93,7 +93,7 @@ fn move_movers(mut movers: Query<&mut Transform, With<Dynamic>>) {
 
 fn save_game(keycode: Res<ButtonInput<KeyCode>>, mut save_requests: EventWriter<SavingRequest>) {
     if keycode.just_pressed(KeyCode::KeyS) {
-        save_requests.send(SavingRequest {
+        save_requests.write(SavingRequest {
             path: "scenes/save.scn.ron".into(),
         });
     }
@@ -101,7 +101,7 @@ fn save_game(keycode: Res<ButtonInput<KeyCode>>, mut save_requests: EventWriter<
 
 fn load_game(keycode: Res<ButtonInput<KeyCode>>, mut load_requests: EventWriter<LoadingRequest>) {
     if keycode.just_pressed(KeyCode::KeyL) {
-        load_requests.send(LoadingRequest {
+        load_requests.write(LoadingRequest {
             path: "scenes/save.scn.ron".into(),
         });
     }

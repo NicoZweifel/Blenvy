@@ -1,11 +1,11 @@
 use crate::{AssetRoot, BlenvyConfig};
 use bevy::{
-    log::info,
     prelude::{AppTypeRegistry, ReflectComponent, ReflectResource, World},
     reflect::{TypeInfo, TypeRegistration, VariantInfo},
 };
 use serde_json::{json, Map, Value};
 use std::{fs::File, path::Path};
+use tracing::info;
 
 pub fn export_types(world: &mut World) {
     let config = world
